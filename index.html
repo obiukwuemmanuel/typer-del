@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flyer Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800|Open+Sans:300,400,600,700');
+        /* Add your custom styles here */
+        
+        
+.body {
+    font-size: 15px;
+    color: #808080;
+    font-weight: normal;
+    font-family: 'Open Sans', sans-serif;
+    overflow-x: hidden;
+    direction: ltr;
+}
+
+        .avatar-container {
+            position: relative;
+            width: 300px;
+            height: 500px;
+            margin: auto;
+        }
+        
+        .avatar {
+            position: absolute;
+            left: 10px;
+            top: 50px;
+            border: 5px solid white;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: none;
+            /* Initially hide the avatar */
+        }
+        
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .card img {
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        
+        .card-body {
+            padding: 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-text {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .btn {
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<div class="row">
+    <div class="col-12">
+        <div class="contact-form-area">
+            <h3 class="text-center">GENERATE PERSONALIZED FLYER</h3>
+
+            <div class="row">
+                <div class="avatar-container" id="target">
+                    <span>
+                <img
+                  src="img/IMG-20240324-WA0005.jpg"
+                  width="300px"
+                  height="300px"
+                />
+                <img src="" class="avatar" id="avatarImg" />
+              </span>
+
+                    <input type="file" name="userImage" class="form-control mt-3 userImage" id="userImage" onchange="readURL(this)" accept="image/*" />
+                    <span class="display"></span>
+                    <button class="btn btn-success col-12" name="submit" onclick="snapshot()" style="display: none">
+                Download Flyer
+              </button>
+                </div>
+            </div>
+
+            <div class="row"></div>
+            <p class="view"></p>
+            <canvas class="imageCanvas myCanvas" id="myCanvas" style="display: none"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- cards -->
+
+<div class="container">
+
+    <div class="h3 text-center"><a class="text text-default" href="./search1.php">OUR CORE MESSAGES</a>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4">
+            <div class="card">
+                <img src="./img/IMG-20240324-WA0007.jpg" class="card-img-top" alt="Product Image" />
+                <div class="card-body">
+                    <p class="card-text">
+                        OUR CORE MESSAGES
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Add more cards as needed -->
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card">
+                <img src="./img/IMG-20240324-WA0008.jpg" class="card-img-top" alt="Product Image" />
+                <div class="card-body">
+                    <p class="card-text">
+                        OUR CORE MESSAGES
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card">
+                <img src="./img/IMG-20240324-WA0009.jpg" class="card-img-top" alt="Product Image" />
+                <div class="card-body">
+                    <p class="card-text">
+                        OUR CORE MESSAGES
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card">
+                <img src="./img/IMG-20240324-WA0010.jpg" class="card-img-top" alt="Product Image" />
+                <div class="card-body">
+                    <p class="card-text">
+                        OUR CORE MESSAGES
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                document.getElementById("avatarImg").src = e.target.result;
+                document.querySelector(".avatar").style.display = "block"; // Show the avatar image
+                document.querySelector('button[name="submit"]').style.display =
+                    "block"; // Show the download button
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function snapshot() {
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        // Set canvas size to match the background image size
+        canvas.width = 300;
+        canvas.height = 500;
+
+        var backgroundImg = document.querySelector(
+            ".avatar-container img:first-child"
+        );
+        var avatarImg = document.getElementById("avatarImg");
+
+        // Draw the background image
+        ctx.drawImage(backgroundImg, 0, 0, 300, 300);
+
+        // Draw the avatar image on top of the background image
+        ctx.drawImage(avatarImg, 10, 50, 120, 120);
+
+        var downloadLink = document.createElement("a");
+        downloadLink.href = canvas.toDataURL();
+        downloadLink.download = "personalized-flyer.png";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
